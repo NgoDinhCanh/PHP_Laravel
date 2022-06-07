@@ -166,3 +166,11 @@ use Illuminate\Support\Facades\View;
 // });
 
 // Route::get('product/{id}',[HomeController::class,'getProductDetail']);
+
+Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('/products',[HomeController::class,'products'])->name('products');
+Route::get('/addproduct',[HomeController::class,'getAdd'])->name('addproduct');
+//Route::post('/addproduct',[HomeController::class,'postAdd']);
+Route::put('/addproduct',[HomeController::class,'putAdd']);
+
+
