@@ -4,6 +4,9 @@
 @endsection
 @section('content')
     <h1>Home</h1>
+    <x-package-alert type="success" content='hello' data-icon='check'/>
+    <x-inputs.button/>
+    <x-form.button />
 @endsection
 
 @section('sidebar')

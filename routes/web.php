@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\View;
 
 /*
@@ -170,7 +171,56 @@ use Illuminate\Support\Facades\View;
 Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/products',[HomeController::class,'products'])->name('products');
 Route::get('/addproduct',[HomeController::class,'getAdd'])->name('addproduct');
-//Route::post('/addproduct',[HomeController::class,'postAdd']);
+Route::post('/addproduct',[HomeController::class,'postAdd']);
 Route::put('/addproduct',[HomeController::class,'putAdd']);
+
+Route::get('/demo-response',function(){
+    return 'Demo-response';
+});
+Route::get('/demo-response-array',function(){
+    $contentArr = [
+        'name' => 'DinhCanh',
+        'age' => 25,
+        'job' => 'Full Stack Developer'
+    ];
+    return $contentArr;
+});
+Route::get('/demo-response-controller',[HomeController::class,'getArray']);
+
+Route::get('/demo-class-response',function(){
+    $content = '<h2> Ngo Dinh Canh </h2>';
+    //$response = (new Response($content))->header('Content-Type','application/json');
+    $response = (new Response())->cookie('CK01','cookie one',30);
+
+    //dd($response);
+    return $response;
+});
+Route::get('/demo-class-response-2',function(){
+    $response = response('Not Found',404);
+    //dd($response);
+    return $response;
+});
+Route::get('/demo-get-cookie',function(Request $request){
+    return $request->cookie('CK01');
+});
+Route::get('/demo-response-view',function(){
+    //return view('clients.demo-test');
+    $response = response()->view('clients.demo-test',[
+        'title' => 'Learn HTTP Response'
+    ],201)->header('Content-Type','application/json');
+    return $response;
+});
+Route::get('/demo-form',function(){
+    return view('clients.demo-test');
+})->name('demo-form');
+Route::post('/demo-form',function(Request $request){
+    if(!empty($request->username) && !empty($request->password)){
+        return back()->withInput()->with('message','Validate Complete!');
+    }
+    return redirect(route('demo-form'))->with('message','Validate fail');
+});
+
+Route::get('/dowload-picture',[HomeController::class,'dowloadPicture'])->name('dowload-picture');
+
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\View\Components\Alert;
+use App\View\Components\inputs\Button;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
@@ -31,5 +33,9 @@ class AppServiceProvider extends ServiceProvider
             if(!empty($dateObject)) return "<?php echo ($expression)->format('d-m-y h:i:s'); ?>";
             else return false;
         });
+
+        Blade::component('package-alert',Alert::class);
+
+        Blade::component('button',Button::class);
     }
 }
